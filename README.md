@@ -8,9 +8,10 @@ as collector configurations.
 
 ### Quick Start
 To use any of these:
-1. Edit and/or merge any required collector configurations
-2. Restart/refresh collector if necessary
-3. Import the .json as a new dashboard in your local Grafana instance
+1.  Edit and/or merge any required collector configurations
+2.  Restart/refresh collector if necessary
+3.  Import the .json as a new dashboard in your local Grafana instance
+
 
 ### References
 These dashboards, along with screenshots, may also be found at https://grafana.net/waterbywind

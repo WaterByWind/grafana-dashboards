@@ -19,12 +19,13 @@ config.system_cfg.2=snmp.location=somewhere
 
 ### Quick Start
 1. Enable SNMP monitoring on your UAPs via UniFi controller
-2. Merge the included `telegraf.conf` with your local Telegraf instance configuration (or create a new instance)
+2. Merge the included `telegraf-inputs.conf` with your local Telegraf instance configuration (or create a new instance)
   1. Edit the SNMP 'community' string as appropriate
   2. Edit the 'agents' list to include all of your monitored UAPs
-  3. If you already have an InfluxDB output configured in your Telegraf instance you do not need the output section.  Otherwise:
-    1. Edit the URL to your new InfluxDB instance
-    2. Edit the username and pawssword for this InfluxDB instance as appropriate
+  3. If you do _not_ already have an InfluxDB output configured in your Telegraf instance:
+    1. Merge the included `telegraf-outputs.conf` with your local Telegraf instance configuration:
+    2. Edit the URL to your new InfluxDB instance
+    3. Edit the username and pawssword for this InfluxDB instance as appropriate
 3.  Restart Telegraf
 4.  Import the included `unifi-ap-dashboard.json` as a new dashboard into your local Grafana instance
 
@@ -40,8 +41,10 @@ The FROGFOOT-RESOURCES-MIB will also be needed, but a simple web search should p
 #### Files
 - `unifi-ap-dashboard.json`:
  - Actual Grafana dashboard (no edits required)
-- `telegraf.conf`:
- - Telegraf configuration for use with this dashboard (edits required)
+- `telegraf-inputs.conf`:
+ - Telegraf input configuration for use with this dashboard (edits required)
+- `telegraf-outputs.conf`:
+ - Optional Telegraf output configuration for use with this dashboard (edits required)
 
 
 #### References

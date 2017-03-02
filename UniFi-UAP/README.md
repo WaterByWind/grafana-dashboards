@@ -25,7 +25,7 @@ config.system_cfg.2=snmp.location=somewhere
   3. If you do _not_ already have an InfluxDB output configured in your Telegraf instance:
     1. Merge the included `telegraf-outputs.conf` with your local Telegraf instance configuration:
     2. Edit the URL to your new InfluxDB instance
-    3. Edit the username and pawssword for this InfluxDB instance as appropriate
+    3. Edit the username and password for this InfluxDB instance as appropriate
 3.  Restart Telegraf
 4.  Import the included `unifi-ap-dashboard.json` as a new dashboard into your local Grafana instance
 
@@ -33,9 +33,9 @@ config.system_cfg.2=snmp.location=somewhere
 ### Notes
 The CCQ & Stations graphs may need to be adjusted if there are more than than two total vAPs (multiple SSIDs per radio) selected, as the legend may grow too large with the graphs configured as-is.  This would be a matter of preference.  The template does allow a selection of vAPs to display as an option.
 
-The Unifi MIB locations may be found in the [UniFi Updates Blog](https://community.ubnt.com/t5/UniFi-Updates-Blog/bg-p/Blog_UniFi) announcements for UniFi releases. These should be downloaded and placed in the default SNMP MIBs location on the server where the Telegraf instance is running.
+The Unifi MIB locations may be found in the [UniFi Updates Blog](https://community.ubnt.com/t5/UniFi-Updates-Blog/bg-p/Blog_UniFi) announcements for UniFi releases. These should be downloaded and placed in the default SNMP MIBs location on the server where the Telegraf instance is running.  Example copies of these two files are also included in the `mibs` dir as well.
 
-The FROGFOOT-RESOURCES-MIB will also be needed, but a simple web search should provide many references to sources if needed.  Some SNMP distributions already include this, but not all.
+The FROGFOOT-RESOURCES-MIB will also be needed, but a simple web search should provide many references to sources if needed.  Some SNMP distributions already include this, but not all.  An example of this is included in the `mibs` dir as well.
 
 
 #### Files
@@ -45,6 +45,11 @@ The FROGFOOT-RESOURCES-MIB will also be needed, but a simple web search should p
  - Telegraf input configuration for use with this dashboard (edits required)
 - `telegraf-outputs.conf`:
  - Optional Telegraf output configuration for use with this dashboard (edits required)
+- `mibs/`:  
+ - Example MIB files for use with this dashboard (no edits required):
+   - `FROGFOOT-RESOURCES-MIB`
+   - `UBNT-MIB`
+   - `UBNT-UniFi-MIB`
 
 
 #### References

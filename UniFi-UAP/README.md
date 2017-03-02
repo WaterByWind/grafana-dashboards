@@ -47,9 +47,9 @@ The FROGFOOT-RESOURCES-MIB will also be needed, but a simple web search should p
  - Optional Telegraf output configuration for use with this dashboard (edits required)
 - `mibs/`:  
  - Example MIB files for use with this dashboard (no edits required):
-   - `FROGFOOT-RESOURCES-MIB`
-   - `UBNT-MIB`
-   - `UBNT-UniFi-MIB`
+     - `FROGFOOT-RESOURCES-MIB` 
+     - `UBNT-MIB` 
+     - `UBNT-UniFi-MIB` 
 
 
 #### References

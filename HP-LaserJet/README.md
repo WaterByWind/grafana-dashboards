@@ -9,14 +9,14 @@ The included collector configuration uses a few HP-printer-specific OIDs defined
 
 ### Important Dependency Note
 The included Telegraf:SNMP plugin configuration depends upon a feature that is not yet part of the released Telegraf 1.2.
-Object IP-MIB::ipSystemStatsTable leverages a non-accessible index to identify the IP Version for the statistics in each row.  The actual index is the sub-id for each table element, of which the Telegraf:SNMP plugin does not currently make
+Object `IP-MIB::ipSystemStatsTable` leverages a non-accessible index to identify the IP Version for the statistics in each row.  The actual index is the sub-id for each table element, of which the Telegraf:SNMP plugin does not currently make
 available as a field or tag.  However there is a pull-request to add this capability using a new flag 'index_as_tag'
 -  'index_as_tag' on tables requires PR \#2366 for support
   -  See https://github.com/influxdata/telegraf/issues/1948
 
 There are two options:
-1.  Wait for a formal release of Telegraf with the needed support.  The noted PR is tagged for the Telegraf v1.3 milestone.
-2.  Build custom version of Telegraf with the required PR applied.  The changes needed are entirely contained within the single `plugins/inputs/snmp/snmp.go` source file so this is a relatively simple change.
+ 1.  Wait for a formal release of Telegraf with the needed support.  The noted PR is tagged for the Telegraf v1.3 milestone.  
+ 2.  Build custom version of Telegraf with the required PR applied.  The changes needed are entirely contained within the single `plugins/inputs/snmp/snmp.go` source file so this is a relatively simple change.  
 
 ### Dependencies
 1. [InfluxDB](https://docs.influxdata.com/influxdb/) as the time-series database

@@ -45,11 +45,11 @@
   "title": "UniFi AP Dashboard",
   "description": "UBNT UniFi AP Templated Dashboard",
   "tags": [
-    "UBNT",
     "AP",
-    "UniFi",
+    "System",
     "Templated",
-    "System"
+    "UBNT",
+    "UniFi"
   ],
   "style": "dark",
   "timezone": "browser",
@@ -2878,6 +2878,8 @@
               ],
               "measurement": "ifTable",
               "policy": "default",
+              "query": "SELECT non_negative_derivative(last(\"ifInDiscards\"), 1s) AS \"Drop:In\", non_negative_derivative(last(\"ifOutDiscards\"), 1s) AS \"Drop:Out\", non_negative_derivative(last(\"ifInErrors\"), 1s) AS \"Error:In\", non_negative_derivative(last(\"ifOutErrors\"), 1s) AS \"Error:Out\", non_negative_derivative(last(\"ifInUnknownProtos\"), 1s) AS \"Unkwn:In\" FROM \"ifTable\" WHERE \"agent_host\" =~ /^$host$/ AND \"ifOperStatus\" = 1 AND $timeFilter GROUP BY time($interval), \"ifDescr\" fill(null)",
+              "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
               "select": [
@@ -3014,9 +3016,7 @@
                   "operator": "=",
                   "value": "1"
                 }
-              ],
-              "query": "SELECT non_negative_derivative(last(\"ifInDiscards\"), 1s) AS \"Drop:In\", non_negative_derivative(last(\"ifOutDiscards\"), 1s) AS \"Drop:Out\", non_negative_derivative(last(\"ifInErrors\"), 1s) AS \"Error:In\", non_negative_derivative(last(\"ifOutErrors\"), 1s) AS \"Error:Out\", non_negative_derivative(last(\"ifInUnknownProtos\"), 1s) AS \"Unkwn:In\" FROM \"ifTable\" WHERE \"agent_host\" =~ /^$host$/ AND \"ifOperStatus\" = 1 AND $timeFilter GROUP BY time($interval), \"ifDescr\" fill(null)",
-              "rawQuery": true
+              ]
             }
           ],
           "thresholds": [],
@@ -3057,6 +3057,379 @@
         }
       ],
       "title": "All/Aggregate Interface Statistics"
+    },
+    {
+      "collapse": false,
+      "editable": true,
+      "height": "250px",
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "${DS_TELEGRAF}",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "id": 44,
+          "isNew": true,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "max": true,
+            "min": false,
+            "rightSide": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [
+            {
+              "alias": "/:Out$/",
+              "transform": "negative-Y"
+            }
+          ],
+          "span": 7,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "$col",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "hide": false,
+              "measurement": "snmp.UAP",
+              "policy": "default",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "snmpInPkts"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  },
+                  {
+                    "params": [
+                      "1m"
+                    ],
+                    "type": "non_negative_derivative"
+                  },
+                  {
+                    "params": [
+                      "Msgs:In"
+                    ],
+                    "type": "alias"
+                  }
+                ],
+                [
+                  {
+                    "params": [
+                      "snmpOutPkts"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  },
+                  {
+                    "params": [
+                      "1m"
+                    ],
+                    "type": "non_negative_derivative"
+                  },
+                  {
+                    "params": [
+                      "Msgs:Out"
+                    ],
+                    "type": "alias"
+                  }
+                ],
+                [
+                  {
+                    "params": [
+                      "snmpInGetResponses"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  },
+                  {
+                    "params": [
+                      "1m"
+                    ],
+                    "type": "non_negative_derivative"
+                  },
+                  {
+                    "params": [
+                      "GetResp:In"
+                    ],
+                    "type": "alias"
+                  }
+                ],
+                [
+                  {
+                    "params": [
+                      "snmpOutGetResponses"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  },
+                  {
+                    "params": [
+                      "1m"
+                    ],
+                    "type": "non_negative_derivative"
+                  },
+                  {
+                    "params": [
+                      "GetResp:Out"
+                    ],
+                    "type": "alias"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "agent_host",
+                  "operator": "=~",
+                  "value": "/^$host$/"
+                }
+              ]
+            },
+            {
+              "alias": "$col",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "policy": "default",
+              "query": "SELECT non_negative_derivative(mean(\"allReqIn\"), 1m) AS \"GetReq:In\", non_negative_derivative(mean(\"allReqOut\"), 1m) AS \"GetReq:Out\" FROM ( SELECT \"snmpInGetRequests\"+\"snmpInGetNexts\" AS \"allReqIn\", \"snmpOutGetRequests\"+\"snmpOutGetNexts\" AS \"allReqOut\" FROM \"snmp.UAP\" WHERE \"agent_host\" =~ /^$host$/ AND $timeFilter) WHERE $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "SNMP Messages (/min)",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "cumulative"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": false
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "datasource": "${DS_TELEGRAF}",
+          "editable": true,
+          "error": false,
+          "fill": 1,
+          "id": 45,
+          "isNew": true,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "max": true,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "connected",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 5,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "$col",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "snmp.UAP",
+              "policy": "default",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "snmpInTotalReqVars"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  },
+                  {
+                    "params": [
+                      "1m"
+                    ],
+                    "type": "non_negative_derivative"
+                  },
+                  {
+                    "params": [
+                      "Objects"
+                    ],
+                    "type": "alias"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "agent_host",
+                  "operator": "=~",
+                  "value": "/^$host$/"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "SNMP Objects Retrieved (/min)",
+          "tooltip": {
+            "msResolution": false,
+            "shared": true,
+            "sort": 0,
+            "value_type": "cumulative"
+          },
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": false
+            }
+          ]
+        }
+      ],
+      "title": "SNMP"
     }
   ],
   "time": {
@@ -3171,7 +3544,7 @@
   },
   "refresh": "1m",
   "schemaVersion": 13,
-  "version": 27,
+  "version": 28,
   "links": [],
   "gnetId": 1486
 }

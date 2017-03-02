@@ -7,10 +7,10 @@ Each dashboard is in its own directory, along with any dependencies such
 as collector configurations.
 
 ### Quick Start
-To use any of these:
-1.  Edit and/or merge any required collector configurations
-2.  Restart/refresh collector if necessary
-3.  Import the .json as a new dashboard in your local Grafana instance
+To use any of these:  
+1.  Edit and/or merge any required collector configurations.  
+2.  Restart/refresh collector if necessary.  
+3.  Import the .json as a new dashboard in your local Grafana instance.  
 
 
 ### References

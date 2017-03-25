@@ -7,14 +7,13 @@ The Telegraf collector configuration is MIB-based so all of the required MIBs wi
 
 
 ### Important Dependency Note
-The included Telegraf:SNMP plugin configuration depends upon a feature that is not yet part of the released Telegraf 1.2.
-Several collected object tables leverage a non-accessible index, such as to identify the IP Version for the statistics in each row.  The actual index is the sub-id for each table element, of which the Telegraf:SNMP plugin does not currently make available as a field or tag.  However there is a pull-request to add this capability using a new flag 'index_as_tag'
--  'index_as_tag' on tables requires PR \#2366 for support
-  -  See https://github.com/influxdata/telegraf/issues/1948
+The included Telegraf:SNMP plugin configuration depends upon a feature (flag 'index_as_tag') that is not part of the released Telegraf 1.2.
+Several collected object tables leverage a non-accessible index, such as to identify the IP Version for the statistics in each row.  The actual index is the sub-id for each table element, of which the Telegraf:SNMP plugin does not currently make available as a field or tag.  However this capability ([PR #2366](https://github.com/influxdata/telegraf/pull/2366) ) has been added/merged to the latest Telegraf source targeted for the next formal release.
 
-There are two options:
+There are three options for the interim until the next formal release:
  1.  Wait for a formal release of Telegraf with the needed support.  The noted PR is tagged for the Telegraf v1.3 milestone.  
- 2.  Build custom version of Telegraf with the required PR applied.  The changes needed are entirely contained within the single `plugins/inputs/snmp/snmp.go` source file so this is a relatively simple change.  
+ 2.  Use a current nightly build, if available.
+ 3.  Build custom version of Telegraf using the github influxdata/telegraf master branch.  This is actually a straightforward and relatively easy process.
 
 
 ### Dependencies
@@ -49,5 +48,4 @@ As with any SNMP-based monitoring solution with EdgeRouters, IP forwarding stati
 
 
 #### References
-This dashboard is not yet available at https://grafana.net/dashboards/, pending a formal release version of Telegraf
-with the noted 'index_as_tag' support (or similar)
+This dashboard is also available at https://grafana.net/dashboards/1756, including screenshots.

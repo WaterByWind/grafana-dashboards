@@ -6309,7 +6309,7 @@
           },
           "yaxes": [
             {
-              "format": "ops",
+              "format": "iops",
               "label": null,
               "logBase": 1,
               "max": null,
@@ -7379,6 +7379,11 @@
         "name": "dataSource",
         "options": [
           {
+            "text": "Telegraf Internal",
+            "value": "Telegraf Internal",
+            "selected": false
+          },
+          {
             "text": "Telegraf",
             "value": "Telegraf",
             "selected": true
@@ -7417,7 +7422,7 @@
         "multi": true,
         "name": "intf",
         "options": [],
-        "query": "SHOW TAG VALUES FROM \"ifTable\" WITH KEY = \"ifName\" WHERE \"agent_host\" = '$host'",
+        "query": "SHOW TAG VALUES FROM \"ifTable\" WITH KEY = \"ifName\" WHERE \"agent_host\" =~ /^$host$/",
         "refresh": 1,
         "regex": "",
         "sort": 0,
@@ -7432,7 +7437,7 @@
   },
   "refresh": "1m",
   "schemaVersion": 13,
-  "version": 8,
+  "version": 22,
   "links": [],
-  "gnetId": null
+  "gnetId": 1756
 }

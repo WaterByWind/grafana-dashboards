@@ -13,13 +13,13 @@ To use any of these:
 
 ### Contents
 Each dashboard is contained in its own directory, along with any required dependencies and configurations.
-- `HP-LaserJet`
+- [HP-LaserJet](HP-LaserJet)
   - Detailed dashboard for monitoring of HP LaserJet printers via SNMP
-- `UBNT-EdgeRouter`
+- [UBNT-EdgeRouter](UBNT-EdgeRouter)
   - Detailed dashboard for monitoring of Ubiquiti EdgeRouters via SNMP
-- `UniFi-UAP`
+- [UniFi-UAP](UniFi-UAP)
   - Detailed dashboard for monitoring of Ubiquiti UniFi Access Points via SNMP
-- `Extra`
+- [Extra](Extra)
   - Sample Quick Start for InfluxDB/Telegraf/Grafana stack using Docker
 
 Potential additional dashboards _may_ include:  EdgeSwitch, BSD, Linux, Solaris, Raspbian (Raspberry Pi)

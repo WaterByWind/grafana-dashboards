@@ -39,12 +39,12 @@ As with any SNMP-based monitoring solution with EdgeRouters, IP forwarding stati
 
 
 #### Files
-- `ubnt-edgerouter-dashboard.json`:
- - Actual Grafana dashboard (no edits required)
-- `telegraf-inputs.conf`:
- - Telegraf input configuration for use with this dashboard (edits required)
-- `telegraf-outputs.conf`:
- - Optional Telegraf output configuration for use with this dashboard (edits required)
+- `ubnt-edgerouter-dashboard.json`:  
+  Actual Grafana dashboard (no edits required)
+- `telegraf-inputs.conf`:  
+  Telegraf input configuration for use with this dashboard (edits required)
+- `telegraf-outputs.conf`:  
+  Optional Telegraf output configuration for use with this dashboard (edits required)
 
 
 #### References

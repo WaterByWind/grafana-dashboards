@@ -22,16 +22,16 @@ There are three options for the interim until the next formal release:
 
 
 ### Quick Start
-1. Enable SNMP monitoring on your EdgeRouters via EdgeOS BUI or CLI.
-2. Merge the included `telegraf-inputs.conf` with your local Telegraf instance configuration (or create a new instance)
-  1. Edit the SNMP 'community' string as appropriate
-  2. Edit the 'agents' list to include all of your monitored EdgeRouters
-  3. If you do _not_ already have an InfluxDB output configured in your Telegraf instance:
-      1. Merge the included `telegraf-outputs.conf` with your local Telegraf instance configuration:
-      2. Edit the URL to your new InfluxDB instance
-      3. Edit the username and password for this InfluxDB instance as appropriate
-3.  Restart Telegraf
-4.  Import the included `ubnt-edgerouter-dashboard.json` as a new dashboard into your local Grafana instance
+1. Enable SNMP monitoring on your EdgeRouters via EdgeOS BUI or CLI.  
+2. Merge the included `telegraf-inputs.conf` with your local Telegraf instance configuration (or create a new instance)  
+   1. Edit the SNMP 'community' string as appropriate  
+   2. Edit the 'agents' list to include all of your monitored EdgeRouters  
+   3. If you do _not_ already have an InfluxDB output configured in your Telegraf instance:  
+      1. Merge the included `telegraf-outputs.conf` with your local Telegraf instance configuration:  
+      2. Edit the URL to your new InfluxDB instance  
+      3. Edit the username and password for this InfluxDB instance as appropriate  
+3.  Restart Telegraf  
+4.  Import the included `ubnt-edgerouter-dashboard.json` as a new dashboard into your local Grafana instance  
 
 
 ### Notes

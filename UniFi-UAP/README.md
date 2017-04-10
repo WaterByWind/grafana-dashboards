@@ -2,6 +2,8 @@
 
 Detailed dashboard for monitoring of Ubiquiti UniFi Access Points via SNMP.
 
+___Please Note___ that the collector configuration has been updated to support the current dashboard. If you are updating a previous revision of the dashboard please check the collector configuration as well to ensure it is current.
+
 This dashboard works with Gen2 and later APs.  Gen1 APs *do* support monitoring via SNMP, however they provide very little instrumentation due to the lack of support for the IF-MIB and UBNT-UniFi-MIB mibs.
 
 The Telegraf collector configuration is MIB-based so all of the required MIBs will need to be available for the collector to perform the needed translations.  Most SNMP distributions available on most platforms already provide these with one exception (see below).  This configuration uses the "new" SNMP plugin for Telegraf, so SNMP monitoring must be enabled in the UniFi controller.  The 'agents' list in the configuration is of the actual APs themselves, however, and not the controller.
@@ -47,9 +49,9 @@ The FROGFOOT-RESOURCES-MIB will also be needed, but a simple web search should p
  - Optional Telegraf output configuration for use with this dashboard (edits required)
 - `mibs/`:  
  - Example MIB files for use with this dashboard (no edits required):
-     - `FROGFOOT-RESOURCES-MIB` 
-     - `UBNT-MIB` 
-     - `UBNT-UniFi-MIB` 
+     - `FROGFOOT-RESOURCES-MIB`
+     - `UBNT-MIB`
+     - `UBNT-UniFi-MIB`
 
 
 #### References

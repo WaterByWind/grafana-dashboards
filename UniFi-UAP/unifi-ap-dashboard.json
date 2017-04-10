@@ -18,6 +18,12 @@
     },
     {
       "type": "panel",
+      "id": "text",
+      "name": "Text",
+      "version": ""
+    },
+    {
+      "type": "panel",
       "id": "singlestat",
       "name": "Singlestat",
       "version": ""
@@ -230,6 +236,20 @@
       "height": "150px",
       "panels": [
         {
+          "content": "<p style=\"text-align:center; vertical-align: middle;\"><br/><img src=\"https://dl.ubnt.com/press/Company_Logos/Primary/WEB/UBNT_Primary_Logo_RGB.png\" height=\"100\"  alt=\"UBNT\"/></p>",
+          "editable": true,
+          "error": false,
+          "height": "",
+          "id": 46,
+          "isNew": true,
+          "links": [],
+          "mode": "html",
+          "span": 2,
+          "title": "",
+          "transparent": false,
+          "type": "text"
+        },
+        {
           "cacheTimeout": null,
           "colorBackground": false,
           "colorValue": false,
@@ -270,7 +290,7 @@
           "nullPointMode": "connected",
           "nullText": null,
           "postfix": "s",
-          "postfixFontSize": "80%",
+          "postfixFontSize": "70%",
           "prefix": "",
           "prefixFontSize": "50%",
           "rangeMaps": [
@@ -280,7 +300,7 @@
               "to": "null"
             }
           ],
-          "span": 4,
+          "span": 2,
           "sparkline": {
             "fillColor": "rgba(31, 118, 189, 0.18)",
             "full": false,
@@ -324,7 +344,7 @@
           "title": "Uptime",
           "transparent": false,
           "type": "singlestat",
-          "valueFontSize": "80%",
+          "valueFontSize": "70%",
           "valueMaps": [
             {
               "op": "=",
@@ -417,15 +437,15 @@
                 },
                 {
                   "condition": "AND",
-                  "key": "unifiVapName",
+                  "key": "unifiVapRadio",
                   "operator": "=",
-                  "value": "ath0"
+                  "value": "na"
                 }
               ]
             }
           ],
           "thresholds": "",
-          "title": "Radio 0 Channel",
+          "title": "na Radio Channel",
           "transparent": false,
           "type": "singlestat",
           "valueFontSize": "80%",
@@ -514,15 +534,15 @@
                 },
                 {
                   "condition": "AND",
-                  "key": "unifiVapName",
+                  "key": "unifiVapRadio",
                   "operator": "=",
-                  "value": "ath0"
+                  "value": "na"
                 }
               ]
             }
           ],
           "thresholds": "",
-          "title": "Radio 0 Tx Power",
+          "title": "na Radio  Tx Power",
           "transparent": false,
           "type": "singlestat",
           "valueFontSize": "80%",
@@ -611,15 +631,15 @@
                 },
                 {
                   "condition": "AND",
-                  "key": "unifiVapName",
+                  "key": "unifiVapRadio",
                   "operator": "=",
-                  "value": "ath1"
+                  "value": "ng"
                 }
               ]
             }
           ],
           "thresholds": "",
-          "title": "Radio 1 Channel",
+          "title": "ng Radio Channel",
           "transparent": false,
           "type": "singlestat",
           "valueFontSize": "80%",
@@ -716,7 +736,7 @@
             }
           ],
           "thresholds": "",
-          "title": "Radio 1 Tx Power",
+          "title": "ng Radio Tx Power",
           "transparent": false,
           "type": "singlestat",
           "valueFontSize": "80%",
@@ -1114,6 +1134,12 @@
                   "key": "unifiVapName",
                   "operator": "=~",
                   "value": "/^$vap$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "unifiVapRadio",
+                  "operator": "=~",
+                  "value": "/^$radio$/"
                 }
               ]
             }
@@ -1240,6 +1266,12 @@
                   "key": "unifiVapName",
                   "operator": "=~",
                   "value": "/^$vap$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "unifiVapRadio",
+                  "operator": "=~",
+                  "value": "/^$radio$/"
                 }
               ]
             }
@@ -1359,6 +1391,12 @@
                   "key": "agent_host",
                   "operator": "=~",
                   "value": "/^$host$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "unifiRadioRadio",
+                  "operator": "=~",
+                  "value": "/^$radio$/"
                 }
               ]
             }
@@ -1538,6 +1576,12 @@
                   "key": "agent_host",
                   "operator": "=~",
                   "value": "/^$host$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "unifiRadioRadio",
+                  "operator": "=~",
+                  "value": "/^$radio$/"
                 }
               ]
             }
@@ -1725,6 +1769,12 @@
                   "key": "unifiVapName",
                   "operator": "=~",
                   "value": "/^$vap$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "unifiVapRadio",
+                  "operator": "=~",
+                  "value": "/^$radio$/"
                 }
               ]
             }
@@ -1891,6 +1941,12 @@
                   "key": "unifiVapName",
                   "operator": "=~",
                   "value": "/^$vap$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "unifiVapRadio",
+                  "operator": "=~",
+                  "value": "/^$radio$/"
                 }
               ]
             }
@@ -2177,6 +2233,12 @@
                   "key": "unifiVapName",
                   "operator": "=~",
                   "value": "/^$vap$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "unifiVapRadio",
+                  "operator": "=~",
+                  "value": "/^$radio$/"
                 }
               ]
             }
@@ -3466,7 +3528,8 @@
       {
         "current": {
           "text": "Telegraf",
-          "value": "Telegraf"
+          "value": "Telegraf",
+          "selected": true
         },
         "hide": 2,
         "label": null,
@@ -3476,6 +3539,16 @@
             "text": "Telegraf",
             "value": "Telegraf",
             "selected": true
+          },
+          {
+            "text": "Telegraf Internal",
+            "value": "Telegraf Internal",
+            "selected": false
+          },
+          {
+            "text": "EdgeRouter",
+            "value": "EdgeRouter",
+            "selected": false
           }
         ],
         "query": "influxdb",
@@ -3507,11 +3580,29 @@
         "datasource": "${DS_TELEGRAF}",
         "hide": 0,
         "includeAll": true,
+        "label": "Radio",
+        "multi": false,
+        "name": "radio",
+        "options": [],
+        "query": "SHOW TAG VALUES FROM \"unifiVapTable\" WITH KEY = \"unifiVapRadio\" WHERE \"agent_host\" =~ /^$host$/",
+        "refresh": 1,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": null,
+        "tagsQuery": null,
+        "type": "query"
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_TELEGRAF}",
+        "hide": 0,
+        "includeAll": true,
         "label": "vAP:",
         "multi": true,
         "name": "vap",
         "options": [],
-        "query": "SHOW TAG VALUES FROM \"unifiVapTable\" WITH KEY = \"unifiVapName\" WHERE \"agent_host\" =~ /^$host/",
+        "query": "SHOW TAG VALUES FROM \"unifiVapTable\" WITH KEY = \"unifiVapName\" WHERE \"agent_host\" =~ /^$host$/",
         "refresh": 1,
         "regex": "",
         "sort": 0,
@@ -3529,7 +3620,7 @@
         "multi": true,
         "name": "intf",
         "options": [],
-        "query": "SHOW TAG VALUES FROM \"unifiIfTable\" WITH KEY = \"unifiIfName\" WHERE \"agent_host\" =~ /^$host/",
+        "query": "SHOW TAG VALUES FROM \"unifiIfTable\" WITH KEY = \"unifiIfName\" WHERE \"agent_host\" =~ /^$host$/",
         "refresh": 1,
         "regex": "",
         "sort": 0,
@@ -3544,7 +3635,8 @@
   },
   "refresh": "1m",
   "schemaVersion": 13,
-  "version": 28,
+  "version": 33,
   "links": [],
   "gnetId": 1486
 }
+

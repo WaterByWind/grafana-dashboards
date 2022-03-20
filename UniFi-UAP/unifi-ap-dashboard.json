@@ -9,30 +9,25 @@
       "pluginName": "InfluxDB"
     }
   ],
+  "__elements": [],
   "__requires": [
     {
       "type": "panel",
       "id": "bargauge",
-      "name": "Bar Gauge",
+      "name": "Bar gauge",
       "version": ""
     },
     {
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "6.5.3"
+      "version": "8.4.4"
     },
     {
       "type": "panel",
       "id": "grafana-clock-panel",
       "name": "Clock",
-      "version": "1.0.3"
-    },
-    {
-      "type": "panel",
-      "id": "graph",
-      "name": "Graph",
-      "version": ""
+      "version": "1.3.0"
     },
     {
       "type": "datasource",
@@ -42,8 +37,8 @@
     },
     {
       "type": "panel",
-      "id": "singlestat",
-      "name": "Singlestat",
+      "id": "stat",
+      "name": "Stat",
       "version": ""
     },
     {
@@ -57,6 +52,12 @@
       "id": "text",
       "name": "Text",
       "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
     }
   ],
   "annotations": {
@@ -68,24 +69,75 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
   },
-  "description": "Ubiquiti Networks UniFi AP Templated Dashboard",
+  "description": "Ubiquiti Networks UniFi AP Dashboard",
   "editable": false,
+  "fiscalYearStartMonth": 0,
   "gnetId": 1486,
   "graphTooltip": 1,
   "id": null,
-  "iteration": 1588642450403,
+  "iteration": 1647734757910,
   "links": [],
+  "liveNow": false,
   "panels": [
     {
-      "columns": [],
-      "datasource": "${DS_TELEGRAF_SNMP}",
-      "editable": true,
-      "error": false,
-      "fontSize": "100%",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_TELEGRAF_SNMP}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "center",
+            "displayMode": "auto"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "time: YYYY-MM-DD HH:mm:ss"
+              },
+              {
+                "id": "custom.align"
+              }
+            ]
+          }
+        ]
+      },
       "gridPos": {
         "h": 3,
         "w": 24,
@@ -94,34 +146,17 @@
       },
       "id": 1,
       "links": [],
-      "options": {},
-      "pageSize": null,
-      "scroll": false,
-      "showHeader": true,
-      "sort": {
-        "col": null,
-        "desc": false
-      },
-      "styles": [
-        {
-          "dateFormat": "YYYY-MM-DD HH:mm:ss",
-          "pattern": "Time",
-          "type": "date"
-        },
-        {
-          "colorMode": null,
-          "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
           ],
-          "decimals": 2,
-          "pattern": "/.*/",
-          "thresholds": [],
-          "type": "number",
-          "unit": "short"
-        }
-      ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "8.4.4",
       "targets": [
         {
           "alias": "$col",
@@ -240,21 +275,23 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "$host",
-      "transform": "table",
+      "transformations": [
+        {
+          "id": "merge",
+          "options": {
+            "reducers": []
+          }
+        }
+      ],
       "type": "table"
     },
     {
-      "bgColor": null,
       "clockType": "custom",
       "countdownSettings": {
-        "customFormat": null,
         "endCountdownTime": "2020-02-08T01:32:00.000Z",
         "endText": "00:00:00"
       },
-      "datasource": null,
       "dateSettings": {
         "dateFormat": "ddd  D MMM YYYY",
         "fontSize": "12px",
@@ -269,48 +306,97 @@
       },
       "id": 54,
       "mode": "time",
-      "options": {},
+      "options": {
+        "bgColor": "",
+        "clockType": "24 hour",
+        "countdownSettings": {
+          "endCountdownTime": "2022-03-19T03:37:11-04:00",
+          "endText": "00:00:00"
+        },
+        "countupSettings": {
+          "beginCountupTime": "2022-03-19T03:37:11-04:00",
+          "beginText": "00:00:00"
+        },
+        "dateSettings": {
+          "dateFormat": "DD MMM YYYY",
+          "fontSize": "14px",
+          "fontWeight": "normal",
+          "locale": "",
+          "showDate": true
+        },
+        "mode": "time",
+        "refresh": "sec",
+        "timeSettings": {
+          "fontSize": "18px",
+          "fontWeight": "bold"
+        },
+        "timezone": "",
+        "timezoneSettings": {
+          "fontSize": "12px",
+          "fontWeight": "normal",
+          "showTimezone": false,
+          "zoneFormat": "offsetAbbv"
+        }
+      },
+      "pluginVersion": "1.3.0",
       "refreshSettings": {
         "syncWithDashboard": false
       },
-      "timeFrom": null,
       "timeSettings": {
         "customFormat": "HH:mm:ss",
         "fontSize": "20px",
         "fontWeight": "normal"
       },
-      "timeShift": null,
-      "timezone": null,
       "timezoneSettings": {
         "fontSize": "12px",
         "fontWeight": "normal",
         "showTimezone": false,
         "zoneFormat": "name"
       },
-      "title": "",
       "type": "grafana-clock-panel"
     },
     {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorPostfix": true,
-      "colorValue": true,
-      "colors": [
-        "rgba(245, 54, 54, 0.9)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(50, 172, 45, 0.97)"
-      ],
-      "datasource": "${DS_TELEGRAF_SNMP}",
-      "decimals": 2,
-      "editable": true,
-      "error": false,
-      "format": "s",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_TELEGRAF_SNMP}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "rgba(245, 54, 54, 0.9)",
+                "value": null
+              },
+              {
+                "color": "rgba(237, 129, 40, 0.89)",
+                "value": 120
+              },
+              {
+                "color": "rgba(50, 172, 45, 0.97)",
+                "value": 300
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
       },
       "gridPos": {
         "h": 4,
@@ -318,43 +404,24 @@
         "x": 4,
         "y": 3
       },
-      "height": "",
       "id": 2,
-      "interval": null,
       "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
       "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "options": {},
-      "postfix": "s",
-      "postfixFontSize": "70%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
       },
-      "tableColumn": "",
+      "pluginVersion": "8.4.4",
       "targets": [
         {
           "dsType": "influxdb",
@@ -389,28 +456,125 @@
           ]
         }
       ],
-      "thresholds": "120,300",
       "title": "Uptime",
-      "type": "singlestat",
-      "valueFontSize": "70%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
+      "type": "stat"
     },
     {
-      "columns": [
-        {
-          "text": "Current",
-          "value": "current"
-        }
-      ],
-      "datasource": "${DS_TELEGRAF_SNMP}",
-      "fontSize": "100%",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_TELEGRAF_SNMP}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "filterable": false,
+            "minWidth": 30
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Time"
+              },
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "unifiVapRadio"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Radio"
+              },
+              {
+                "id": "unit",
+                "value": "string"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "na": {
+                        "index": 0,
+                        "text": "a/n/ac"
+                      },
+                      "ng": {
+                        "index": 1,
+                        "text": "b/g/n"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tx Power"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "dBm"
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "rgba(50, 172, 45, 0.97)",
+                      "value": null
+                    },
+                    {
+                      "color": "rgba(237, 129, 40, 0.89)",
+                      "value": 12
+                    },
+                    {
+                      "color": "rgba(245, 54, 54, 0.9)",
+                      "value": 18
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
       "gridPos": {
         "h": 4,
         "w": 8,
@@ -418,90 +582,17 @@
         "y": 3
       },
       "id": 52,
-      "options": {},
-      "pageSize": null,
-      "showHeader": true,
-      "sort": {
-        "col": 0,
-        "desc": true
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
       },
-      "styles": [
-        {
-          "alias": "Time",
-          "dateFormat": "YYYY-MM-DD HH:mm:ss",
-          "pattern": "Time",
-          "type": "hidden"
-        },
-        {
-          "alias": "Radio",
-          "colorMode": null,
-          "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
-          ],
-          "dateFormat": "YYYY-MM-DD HH:mm:ss",
-          "decimals": 2,
-          "mappingType": 1,
-          "pattern": "unifiVapRadio",
-          "thresholds": [],
-          "type": "string",
-          "unit": "short",
-          "valueMaps": [
-            {
-              "text": "802.11 a/n/ac",
-              "value": "na"
-            },
-            {
-              "text": "802.11 b/g/n",
-              "value": "ng"
-            }
-          ]
-        },
-        {
-          "alias": "",
-          "colorMode": "value",
-          "colors": [
-            "rgba(50, 172, 45, 0.97)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(245, 54, 54, 0.9)"
-          ],
-          "decimals": 0,
-          "pattern": "Tx Power",
-          "thresholds": [
-            "12",
-            "18"
-          ],
-          "type": "number",
-          "unit": "dBm"
-        },
-        {
-          "alias": "",
-          "colorMode": null,
-          "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
-          ],
-          "dateFormat": "YYYY-MM-DD HH:mm:ss",
-          "decimals": 0,
-          "mappingType": 1,
-          "pattern": "*",
-          "rangeMaps": [
-            {
-              "from": "",
-              "text": "",
-              "to": ""
-            }
-          ],
-          "thresholds": [
-            ""
-          ],
-          "type": "number",
-          "unit": "short",
-          "valueMaps": []
-        }
-      ],
+      "pluginVersion": "8.4.4",
       "targets": [
         {
           "alias": "$tag_unifiVapRadio",
@@ -595,15 +686,55 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Radios",
-      "transform": "table",
+      "transformations": [
+        {
+          "id": "merge",
+          "options": {
+            "reducers": []
+          }
+        }
+      ],
       "type": "table"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "${DS_TELEGRAF_SNMP}",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_TELEGRAF_SNMP}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 40
+              },
+              {
+                "color": "orange",
+                "value": 60
+              },
+              {
+                "color": "red",
+                "value": 75
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 4,
         "w": 8,
@@ -614,41 +745,17 @@
       "links": [],
       "options": {
         "displayMode": "gradient",
-        "fieldOptions": {
+        "orientation": "horizontal",
+        "reduceOptions": {
           "calcs": [
             "lastNotNull"
           ],
-          "defaults": {
-            "mappings": [],
-            "max": 100,
-            "min": 0,
-            "nullValueMode": "connected",
-            "thresholds": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 20
-              },
-              {
-                "color": "orange",
-                "value": 40
-              },
-              {
-                "color": "red",
-                "value": 50
-              }
-            ],
-            "unit": "percent"
-          },
-          "override": {},
+          "fields": "",
           "values": false
         },
-        "orientation": "horizontal"
+        "showUnfilled": true
       },
-      "pluginVersion": "6.5.3",
+      "pluginVersion": "8.4.4",
       "targets": [
         {
           "alias": "$tag_unifiRadioRadio",
@@ -705,8 +812,6 @@
       "type": "bargauge"
     },
     {
-      "content": "<p style=\"text-align:center; vertical-align: middle;\"><img src=\"https://dl.ubnt.com/press/logo-UniFi.png\" height=\"50\"  alt=\"UniFi\"/></p>",
-      "datasource": null,
       "editable": true,
       "error": false,
       "gridPos": {
@@ -718,77 +823,108 @@
       "height": "",
       "id": 46,
       "links": [],
-      "mode": "html",
-      "options": {},
-      "title": "",
+      "options": {
+        "content": "<p style=\"text-align:center; vertical-align: middle;\"><img src=\"https://dl.ubnt.com/press/logo-UniFi.png\" height=\"50\"  alt=\"UniFi\"/></p>",
+        "mode": "html"
+      },
+      "pluginVersion": "8.4.4",
       "type": "text"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "${DS_TELEGRAF_SNMP}",
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "fillGradient": 0,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_TELEGRAF_SNMP}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 7,
         "w": 12,
         "x": 0,
         "y": 7
       },
-      "hiddenSeries": false,
       "id": 3,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": true,
-        "max": true,
-        "min": true,
-        "show": true,
-        "sortDesc": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
       "links": [],
-      "nullPointMode": "connected",
       "options": {
-        "dataLinks": []
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      "pluginVersion": "8.4.4",
       "targets": [
         {
           "alias": "$tag_laNames Minute",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_TELEGRAF_SNMP}"
+          },
           "dsType": "influxdb",
           "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
             {
               "params": [
                 "laNames"
               ],
               "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
             }
           ],
           "measurement": "laTable",
@@ -803,10 +939,6 @@
                   "laLoadInt"
                 ],
                 "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
               },
               {
                 "params": [
@@ -825,113 +957,104 @@
           ]
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
       "title": "CPU Load Average",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "cumulative"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "none",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "${DS_TELEGRAF_SNMP}",
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "fillGradient": 0,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_TELEGRAF_SNMP}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 7,
         "w": 12,
         "x": 12,
         "y": 7
       },
-      "hiddenSeries": false,
       "id": 49,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": true,
-        "max": true,
-        "min": true,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
       "links": [],
-      "nullPointMode": "connected",
       "options": {
-        "dataLinks": []
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      "pluginVersion": "8.4.4",
       "targets": [
         {
           "alias": "$tag_index",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_TELEGRAF_SNMP}"
+          },
           "dsType": "influxdb",
           "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
             {
               "params": [
                 "index"
               ],
               "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
             }
           ],
           "measurement": "hrProcessorTable",
@@ -946,10 +1069,6 @@
                   "hrProcessorLoad"
                 ],
                 "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
               }
             ]
           ],
@@ -962,112 +1081,99 @@
           ]
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
       "title": "Processor Load (1 Minute Average)",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "cumulative"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "percent",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "${DS_TELEGRAF_SNMP}",
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "fillGradient": 0,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_TELEGRAF_SNMP}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "deckbytes"
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 7,
         "w": 12,
         "x": 0,
         "y": 14
       },
-      "hiddenSeries": false,
       "id": 50,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": true,
-        "max": true,
-        "min": true,
-        "rightSide": false,
-        "show": true,
-        "sort": null,
-        "sortDesc": null,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
       "links": [],
-      "nullPointMode": "connected",
       "options": {
-        "dataLinks": []
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": true,
-      "steppedLine": false,
+      "pluginVersion": "8.4.4",
       "targets": [
         {
           "alias": "$col",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_TELEGRAF_SNMP}"
+          },
           "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
+          "groupBy": [],
           "measurement": "snmp.UAP",
           "orderByTime": "ASC",
           "policy": "default",
@@ -1080,10 +1186,6 @@
                   "memBuffer"
                 ],
                 "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
               },
               {
                 "params": [
@@ -1100,10 +1202,6 @@
                 "type": "field"
               },
               {
-                "params": [],
-                "type": "mean"
-              },
-              {
                 "params": [
                   "Cache"
                 ],
@@ -1118,10 +1216,6 @@
                 "type": "field"
               },
               {
-                "params": [],
-                "type": "mean"
-              },
-              {
                 "params": [
                   "Shared"
                 ],
@@ -1134,10 +1228,6 @@
                   "memTotalFree"
                 ],
                 "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
               },
               {
                 "params": [
@@ -1156,95 +1246,102 @@
           ]
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
       "title": "Memory Distribution",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "deckbytes",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "${DS_TELEGRAF_SNMP}",
-      "decimals": 2,
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "fillGradient": 0,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_TELEGRAF_SNMP}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "line+area"
+            }
+          },
+          "decimals": 3,
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 0.9
+              },
+              {
+                "color": "red",
+                "value": 0.95
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 7,
         "w": 12,
         "x": 12,
         "y": 14
       },
-      "hiddenSeries": false,
       "id": 47,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": true,
-        "max": true,
-        "min": true,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
       "links": [],
-      "nullPointMode": "connected",
       "options": {
-        "dataLinks": []
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      "pluginVersion": "8.4.4",
       "targets": [
         {
           "alias": "$col",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_TELEGRAF_SNMP}"
+          },
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -1263,7 +1360,7 @@
           "measurement": "snmp.UAP",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT ((mean(\"memTotalReal\")-mean(\"memAvailReal\"))/mean(\"memTotalReal\")) AS \"Real\" FROM \"snmp.UAP\" WHERE (\"agent_host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT ((\"memTotalReal\"-\"memAvailReal\")/\"memTotalReal\") AS \"Real\" FROM \"snmp.UAP\" WHERE (\"agent_host\" =~ /^$host$/) AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1296,122 +1393,99 @@
           ]
         }
       ],
-      "thresholds": [
-        {
-          "colorMode": "critical",
-          "fill": true,
-          "line": true,
-          "op": "gt",
-          "value": 0.95,
-          "yaxis": "left"
-        },
-        {
-          "colorMode": "warning",
-          "fill": true,
-          "line": false,
-          "op": "gt",
-          "value": 0.9,
-          "yaxis": "left"
-        }
-      ],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Memory Usage",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "cumulative"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "decimals": 3,
-          "format": "percentunit",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "title": "Memory Utilization",
+      "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "${DS_TELEGRAF_SNMP}",
-      "decimals": 0,
-      "editable": true,
-      "error": false,
-      "fill": 0,
-      "fillGradient": 0,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_TELEGRAF_SNMP}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "stepAfter",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 7,
         "w": 16,
         "x": 0,
         "y": 21
       },
-      "hiddenSeries": false,
       "id": 19,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": true,
-        "max": true,
-        "min": true,
-        "rightSide": true,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
       "links": [],
-      "nullPointMode": "connected",
       "options": {
-        "dataLinks": []
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pointradius": 0.5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": true,
+      "pluginVersion": "8.4.4",
       "targets": [
         {
           "alias": "$tag_unifiVapName: $tag_unifiVapEssId ($tag_unifiVapRadio)",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_TELEGRAF_SNMP}"
+          },
           "dsType": "influxdb",
           "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
             {
               "params": [
                 "unifiVapName"
@@ -1429,12 +1503,6 @@
                 "unifiVapEssId"
               ],
               "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
             }
           ],
           "measurement": "unifiVapTable",
@@ -1449,10 +1517,6 @@
                   "unifiVapNumStations"
                 ],
                 "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
               }
             ]
           ],
@@ -1477,104 +1541,99 @@
           ]
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
       "title": "Stations",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "${DS_TELEGRAF_SNMP}",
-      "decimals": 0,
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "fillGradient": 0,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_TELEGRAF_SNMP}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "stepAfter",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 7,
         "w": 8,
         "x": 16,
         "y": 21
       },
-      "hiddenSeries": false,
       "id": 23,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": true,
-        "max": true,
-        "min": true,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
       "links": [],
-      "nullPointMode": "connected",
       "options": {
-        "dataLinks": []
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pluginVersion": "6.5.3",
-      "pointradius": 0.5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": true,
+      "pluginVersion": "8.4.4",
       "targets": [
         {
           "alias": "$tag_unifiRadioRadio ($tag_unifiRadioName)",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_TELEGRAF_SNMP}"
+          },
           "dsType": "influxdb",
           "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
             {
               "params": [
                 "unifiRadioName"
@@ -1586,12 +1645,6 @@
                 "unifiRadioRadio"
               ],
               "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
             }
           ],
           "measurement": "unifiRadioTable",
@@ -1606,10 +1659,6 @@
                   "unifiRadioOtherBss"
                 ],
                 "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
               }
             ]
           ],
@@ -1628,114 +1677,104 @@
           ]
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
       "title": "Other BSS",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "${DS_TELEGRAF_SNMP}",
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "fillGradient": 0,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_TELEGRAF_SNMP}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 7,
         "w": 24,
         "x": 0,
         "y": 28
       },
-      "hiddenSeries": false,
       "id": 8,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": true,
-        "max": true,
-        "min": true,
-        "rightSide": true,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
       "links": [],
-      "nullPointMode": "connected",
       "options": {
-        "dataLinks": []
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      "pluginVersion": "8.4.4",
       "targets": [
         {
           "alias": "$tag_unifiRadioRadio:  $col",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_TELEGRAF_SNMP}"
+          },
           "dsType": "influxdb",
           "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
             {
               "params": [
                 "unifiRadioRadio"
               ],
               "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
             }
           ],
           "measurement": "unifiRadioTable",
@@ -1752,10 +1791,6 @@
                 "type": "field"
               },
               {
-                "params": [],
-                "type": "mean"
-              },
-              {
                 "params": [
                   "Rx"
                 ],
@@ -1770,10 +1805,6 @@
                 "type": "field"
               },
               {
-                "params": [],
-                "type": "mean"
-              },
-              {
                 "params": [
                   "Tx"
                 ],
@@ -1786,10 +1817,6 @@
                   "unifiRadioCuTotal"
                 ],
                 "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
               },
               {
                 "params": [
@@ -1814,120 +1841,117 @@
           ]
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "802.11 Channel Utilization",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "cumulative"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "percent",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "title": "WiFi (802.11) Channel Utilization",
+      "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "${DS_TELEGRAF_SNMP}",
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "fillGradient": 0,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_TELEGRAF_SNMP}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bps"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/: *Out$/"
+            },
+            "properties": [
+              {
+                "id": "custom.transform",
+                "value": "negative-Y"
+              }
+            ]
+          }
+        ]
+      },
       "gridPos": {
         "h": 7,
         "w": 24,
         "x": 0,
         "y": 35
       },
-      "hiddenSeries": false,
       "id": 20,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": true,
-        "max": true,
-        "min": true,
-        "rightSide": true,
-        "show": true,
-        "sideWidth": null,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
       "links": [],
-      "nullPointMode": "connected",
       "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "alias": "/: *Out$/",
-          "transform": "negative-Y"
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
         }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      },
+      "pluginVersion": "8.4.4",
       "targets": [
         {
           "alias": "$tag_unifiVapName:  $col",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_TELEGRAF_SNMP}"
+          },
           "dsType": "influxdb",
           "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
             {
               "params": [
                 "unifiVapName"
               ],
               "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
             }
           ],
           "measurement": "unifiVapTable",
@@ -1942,10 +1966,6 @@
                   "unifiVapRxBytes"
                 ],
                 "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
               },
               {
                 "params": [
@@ -1974,10 +1994,6 @@
                 "type": "field"
               },
               {
-                "params": [],
-                "type": "mean"
-              },
-              {
                 "params": [
                   "1s"
                 ],
@@ -2018,119 +2034,118 @@
           ]
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "802.11 Traffic",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "cumulative"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "bps",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "pps",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "title": "WiFi (802.11) Traffic",
+      "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "${DS_TELEGRAF_SNMP}",
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "fillGradient": 0,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_TELEGRAF_SNMP}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "pps"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/: *Out$/"
+            },
+            "properties": [
+              {
+                "id": "custom.transform",
+                "value": "negative-Y"
+              }
+            ]
+          }
+        ]
+      },
       "gridPos": {
         "h": 7,
         "w": 24,
         "x": 0,
         "y": 42
       },
-      "hiddenSeries": false,
       "id": 22,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": true,
-        "max": true,
-        "min": true,
-        "rightSide": true,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
       "links": [],
-      "nullPointMode": "connected",
       "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "alias": "/: *Out$/",
-          "transform": "negative-Y"
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
         }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      },
+      "pluginVersion": "8.4.4",
       "targets": [
         {
           "alias": "$tag_unifiVapName:  $col",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_TELEGRAF_SNMP}"
+          },
           "dsType": "influxdb",
           "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
             {
               "params": [
                 "unifiVapName"
               ],
               "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
             }
           ],
           "measurement": "unifiVapTable",
@@ -2145,10 +2160,6 @@
                   "unifiVapRxPackets"
                 ],
                 "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
               },
               {
                 "params": [
@@ -2169,10 +2180,6 @@
                   "unifiVapTxPackets"
                 ],
                 "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
               },
               {
                 "params": [
@@ -2209,119 +2216,117 @@
           ]
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "802.11 Traffic Distribution",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "cumulative"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "pps",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "pps",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "title": "WiFi (802.11) Traffic Distribution",
+      "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "${DS_TELEGRAF_SNMP}",
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "fillGradient": 0,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_TELEGRAF_SNMP}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "pps"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/: *Out$/"
+            },
+            "properties": [
+              {
+                "id": "custom.transform",
+                "value": "negative-Y"
+              }
+            ]
+          }
+        ]
+      },
       "gridPos": {
         "h": 7,
         "w": 24,
         "x": 0,
         "y": 49
       },
-      "hiddenSeries": false,
       "id": 21,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": true,
-        "max": true,
-        "min": true,
-        "rightSide": true,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
       "links": [],
-      "nullPointMode": "connected",
       "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "alias": "/: *Out$/",
-          "transform": "negative-Y"
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
         }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      },
+      "pluginVersion": "8.4.4",
       "targets": [
         {
           "alias": "$tag_unifiVapName:  $col",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_TELEGRAF_SNMP}"
+          },
           "dsType": "influxdb",
           "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
             {
               "params": [
                 "unifiVapName"
               ],
               "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
             }
           ],
           "measurement": "unifiVapTable",
@@ -2336,10 +2341,6 @@
                   "unifiVapRxDropped"
                 ],
                 "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
               },
               {
                 "params": [
@@ -2362,10 +2363,6 @@
                 "type": "field"
               },
               {
-                "params": [],
-                "type": "mean"
-              },
-              {
                 "params": [
                   "1s"
                 ],
@@ -2384,10 +2381,6 @@
                   "unifiVapRxErrors"
                 ],
                 "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
               },
               {
                 "params": [
@@ -2410,10 +2403,6 @@
                 "type": "field"
               },
               {
-                "params": [],
-                "type": "mean"
-              },
-              {
                 "params": [
                   "1s"
                 ],
@@ -2432,10 +2421,6 @@
                   "unifiVapRxCrypts"
                 ],
                 "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
               },
               {
                 "params": [
@@ -2458,10 +2443,6 @@
                 "type": "field"
               },
               {
-                "params": [],
-                "type": "mean"
-              },
-              {
                 "params": [
                   "1s"
                 ],
@@ -2480,10 +2461,6 @@
                   "unifiVapTxRetries"
                 ],
                 "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
               },
               {
                 "params": [
@@ -2520,119 +2497,117 @@
           ]
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "802.11 Drops/Errors",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "cumulative"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "pps",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "title": "WiFi (802.11) Drops/Errors",
+      "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "${DS_TELEGRAF_SNMP}",
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "fillGradient": 0,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_TELEGRAF_SNMP}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bps"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/: *Out$/"
+            },
+            "properties": [
+              {
+                "id": "custom.transform",
+                "value": "negative-Y"
+              }
+            ]
+          }
+        ]
+      },
       "gridPos": {
         "h": 7,
         "w": 24,
         "x": 0,
         "y": 56
       },
-      "hiddenSeries": false,
       "id": 5,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": true,
-        "max": true,
-        "min": true,
-        "rightSide": true,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
       "links": [],
-      "nullPointMode": "connected",
       "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "alias": "/: *Out$/",
-          "transform": "negative-Y"
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
         }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      },
+      "pluginVersion": "8.4.4",
       "targets": [
         {
           "alias": "$tag_unifiIfName:  $col",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_TELEGRAF_SNMP}"
+          },
           "dsType": "influxdb",
           "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
             {
               "params": [
                 "unifiIfName"
               ],
               "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
             }
           ],
           "measurement": "unifiIfTable",
@@ -2647,10 +2622,6 @@
                   "unifiIfRxBytes"
                 ],
                 "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
               },
               {
                 "params": [
@@ -2677,10 +2648,6 @@
                   "unifiIfTxBytes"
                 ],
                 "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
               },
               {
                 "params": [
@@ -2717,119 +2684,117 @@
           ]
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "802.3 Traffic",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "cumulative"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "bps",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "title": "Ethernet (802.3) Traffic",
+      "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "${DS_TELEGRAF_SNMP}",
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "fillGradient": 0,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_TELEGRAF_SNMP}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "pps"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/: *Out$/"
+            },
+            "properties": [
+              {
+                "id": "custom.transform",
+                "value": "negative-Y"
+              }
+            ]
+          }
+        ]
+      },
       "gridPos": {
         "h": 7,
         "w": 24,
         "x": 0,
         "y": 63
       },
-      "hiddenSeries": false,
       "id": 24,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": true,
-        "max": true,
-        "min": true,
-        "rightSide": true,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
       "links": [],
-      "nullPointMode": "connected",
       "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "alias": "/: *Out$/",
-          "transform": "negative-Y"
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
         }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      },
+      "pluginVersion": "8.4.4",
       "targets": [
         {
           "alias": "$tag_unifiIfName:  $col",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_TELEGRAF_SNMP}"
+          },
           "dsType": "influxdb",
           "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
             {
               "params": [
                 "unifiIfName"
               ],
               "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
             }
           ],
           "measurement": "unifiIfTable",
@@ -2844,10 +2809,6 @@
                   "unifiIfRxPackets"
                 ],
                 "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
               },
               {
                 "params": [
@@ -2870,10 +2831,6 @@
                 "type": "field"
               },
               {
-                "params": [],
-                "type": "mean"
-              },
-              {
                 "params": [
                   "1s"
                 ],
@@ -2892,10 +2849,6 @@
                   "unifiIfRxMulticast"
                 ],
                 "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
               },
               {
                 "params": [
@@ -2926,119 +2879,117 @@
           ]
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "802.3 Traffic Distribution",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "cumulative"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "pps",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "title": "Ethernet (802.3) Traffic Distribution",
+      "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "${DS_TELEGRAF_SNMP}",
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "fillGradient": 0,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_TELEGRAF_SNMP}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "pps"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/: *Out$/"
+            },
+            "properties": [
+              {
+                "id": "custom.transform",
+                "value": "negative-Y"
+              }
+            ]
+          }
+        ]
+      },
       "gridPos": {
         "h": 7,
         "w": 24,
         "x": 0,
         "y": 70
       },
-      "hiddenSeries": false,
       "id": 6,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": true,
-        "max": true,
-        "min": true,
-        "rightSide": true,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
       "links": [],
-      "nullPointMode": "connected",
       "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "alias": "/: *Out$/",
-          "transform": "negative-Y"
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
         }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      },
+      "pluginVersion": "8.4.4",
       "targets": [
         {
           "alias": "$tag_unifiIfName:  $col",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_TELEGRAF_SNMP}"
+          },
           "dsType": "influxdb",
           "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
             {
               "params": [
                 "unifiIfName"
               ],
               "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
             }
           ],
           "measurement": "unifiIfTable",
@@ -3053,10 +3004,6 @@
                   "unifiIfRxDropped"
                 ],
                 "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
               },
               {
                 "params": [
@@ -3079,10 +3026,6 @@
                 "type": "field"
               },
               {
-                "params": [],
-                "type": "mean"
-              },
-              {
                 "params": [
                   "1s"
                 ],
@@ -3103,10 +3046,6 @@
                 "type": "field"
               },
               {
-                "params": [],
-                "type": "mean"
-              },
-              {
                 "params": [
                   "1s"
                 ],
@@ -3125,10 +3064,6 @@
                   "unifiIfTxError"
                 ],
                 "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
               },
               {
                 "params": [
@@ -3159,97 +3094,103 @@
           ]
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "802.3 Drops/Errors",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "cumulative"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "pps",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "title": "Ethernet (802.3) Drops/Errors",
+      "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "${DS_TELEGRAF_SNMP}",
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "fillGradient": 0,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_TELEGRAF_SNMP}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "pps"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/: *Out$/"
+            },
+            "properties": [
+              {
+                "id": "custom.transform",
+                "value": "negative-Y"
+              }
+            ]
+          }
+        ]
+      },
       "gridPos": {
         "h": 7,
         "w": 24,
         "x": 0,
         "y": 77
       },
-      "hiddenSeries": false,
       "id": 4,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": true,
-        "max": true,
-        "min": true,
-        "rightSide": true,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
       "links": [],
-      "nullPointMode": "connected",
       "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "alias": "/: *Out$/",
-          "transform": "negative-Y"
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
         }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      },
+      "pluginVersion": "8.4.4",
       "targets": [
         {
           "alias": "$tag_ifDescr:  $col",
@@ -3418,115 +3359,111 @@
           ]
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
       "title": "All Interface Drops/Errors",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "cumulative"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "pps",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "${DS_TELEGRAF_SNMP}",
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "fillGradient": 0,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_TELEGRAF_SNMP}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/: *Out$/"
+            },
+            "properties": [
+              {
+                "id": "custom.transform",
+                "value": "negative-Y"
+              }
+            ]
+          }
+        ]
+      },
       "gridPos": {
         "h": 7,
         "w": 14,
         "x": 0,
         "y": 84
       },
-      "hiddenSeries": false,
       "id": 44,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": true,
-        "max": true,
-        "min": false,
-        "rightSide": true,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
       "links": [],
-      "nullPointMode": "connected",
       "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "alias": "/: *Out$/",
-          "transform": "negative-Y"
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
         }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      },
+      "pluginVersion": "8.4.4",
       "targets": [
         {
           "alias": "$col",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_TELEGRAF_SNMP}"
+          },
           "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
+          "groupBy": [],
           "hide": false,
           "measurement": "snmp.UAP",
           "orderByTime": "ASC",
@@ -3540,10 +3477,6 @@
                   "snmpInPkts"
                 ],
                 "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
               },
               {
                 "params": [
@@ -3566,10 +3499,6 @@
                 "type": "field"
               },
               {
-                "params": [],
-                "type": "mean"
-              },
-              {
                 "params": [
                   "1m"
                 ],
@@ -3590,10 +3519,6 @@
                 "type": "field"
               },
               {
-                "params": [],
-                "type": "mean"
-              },
-              {
                 "params": [
                   "1m"
                 ],
@@ -3612,10 +3537,6 @@
                   "snmpOutGetResponses"
                 ],
                 "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
               },
               {
                 "params": [
@@ -3641,6 +3562,10 @@
         },
         {
           "alias": "$col",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_TELEGRAF_SNMP}"
+          },
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -3679,109 +3604,98 @@
           "tags": []
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
       "title": "SNMP Messages (/min)",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "cumulative"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "type": "timeseries"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "${DS_TELEGRAF_SNMP}",
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "fillGradient": 0,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_TELEGRAF_SNMP}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 7,
         "w": 10,
         "x": 14,
         "y": 84
       },
-      "hiddenSeries": false,
       "id": 45,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": true,
-        "max": true,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
       "links": [],
-      "nullPointMode": "connected",
       "options": {
-        "dataLinks": []
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      "pluginVersion": "8.4.4",
       "targets": [
         {
           "alias": "$col",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_TELEGRAF_SNMP}"
+          },
           "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
+          "groupBy": [],
           "measurement": "snmp.UAP",
           "orderByTime": "ASC",
           "policy": "default",
@@ -3794,10 +3708,6 @@
                   "snmpInTotalReqVars"
                 ],
                 "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
               },
               {
                 "params": [
@@ -3822,51 +3732,12 @@
           ]
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
       "title": "SNMP Objects Retrieved (/min)",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "cumulative"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "type": "timeseries"
     }
   ],
   "refresh": "1m",
-  "schemaVersion": 21,
+  "schemaVersion": 35,
   "style": "dark",
   "tags": [
     "AP",
@@ -3878,26 +3749,11 @@
   "templating": {
     "list": [
       {
-        "current": {
-          "text": "Telegraf",
-          "value": "Telegraf"
-        },
-        "hide": 2,
-        "includeAll": false,
-        "label": null,
-        "multi": false,
-        "name": "dataSource",
-        "options": [],
-        "query": "influxdb",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "type": "datasource"
-      },
-      {
-        "allValue": null,
         "current": {},
-        "datasource": "${DS_TELEGRAF_SNMP}",
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${DS_TELEGRAF_SNMP}"
+        },
         "definition": "",
         "hide": 0,
         "includeAll": false,
@@ -3910,16 +3766,15 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
-        "tagValuesQuery": null,
-        "tags": [],
-        "tagsQuery": null,
         "type": "query",
         "useTags": false
       },
       {
-        "allValue": null,
         "current": {},
-        "datasource": "${DS_TELEGRAF_SNMP}",
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${DS_TELEGRAF_SNMP}"
+        },
         "definition": "",
         "hide": 0,
         "includeAll": true,
@@ -3932,16 +3787,15 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
-        "tagValuesQuery": null,
-        "tags": [],
-        "tagsQuery": null,
         "type": "query",
         "useTags": false
       },
       {
-        "allValue": null,
         "current": {},
-        "datasource": "${DS_TELEGRAF_SNMP}",
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${DS_TELEGRAF_SNMP}"
+        },
         "definition": "",
         "hide": 0,
         "includeAll": true,
@@ -3954,16 +3808,15 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
-        "tagValuesQuery": null,
-        "tags": [],
-        "tagsQuery": null,
         "type": "query",
         "useTags": false
       },
       {
-        "allValue": null,
         "current": {},
-        "datasource": "${DS_TELEGRAF_SNMP}",
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${DS_TELEGRAF_SNMP}"
+        },
         "definition": "",
         "hide": 0,
         "includeAll": true,
@@ -3976,9 +3829,6 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
-        "tagValuesQuery": null,
-        "tags": [],
-        "tagsQuery": null,
         "type": "query",
         "useTags": false
       }
@@ -4016,5 +3866,6 @@
   "timezone": "browser",
   "title": "UniFi AP Dashboard",
   "uid": "HXRDoWyWz",
-  "version": 23
+  "version": 33,
+  "weekStart": ""
 }
